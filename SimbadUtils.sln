@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simbad.Utils.Tests", "SimbadUtils.Tests\Simbad.Utils.Tests.csproj", "{9A5B9F60-60BE-409F-ABF4-4290496212D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simbad.Utils", "Simbad.Utils\Simbad.Utils.csproj", "{E49A30CF-FCEC-4467-A251-C21480BC838F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simbad.Utils.Silverlight", "Simbad.Utils.Silverlight\Simbad.Utils.Silverlight.csproj", "{268CEC80-6FBE-4ACE-A867-207E2A73A553}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9A5B9F60-60BE-409F-ABF4-4290496212D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A5B9F60-60BE-409F-ABF4-4290496212D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A5B9F60-60BE-409F-ABF4-4290496212D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A5B9F60-60BE-409F-ABF4-4290496212D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E49A30CF-FCEC-4467-A251-C21480BC838F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E49A30CF-FCEC-4467-A251-C21480BC838F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E49A30CF-FCEC-4467-A251-C21480BC838F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E49A30CF-FCEC-4467-A251-C21480BC838F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{268CEC80-6FBE-4ACE-A867-207E2A73A553}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{268CEC80-6FBE-4ACE-A867-207E2A73A553}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{268CEC80-6FBE-4ACE-A867-207E2A73A553}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{268CEC80-6FBE-4ACE-A867-207E2A73A553}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
