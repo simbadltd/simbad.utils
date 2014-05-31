@@ -41,6 +41,7 @@
     <Compile Include="Collections\StringTripleTuple.cs" />
     <Compile Include="Collections\TripleTuple.cs" />
     <Compile Include="Collections\TripleTupleList.cs" />
+    <Compile Include="Factories\Singleton.cs" />
     <Compile Include="Helpers\CloneHelper.cs" />
     <Compile Include="OperationResult.cs" />
     <Compile Include="Properties\Annotations.cs" />
