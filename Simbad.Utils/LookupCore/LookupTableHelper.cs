@@ -1,13 +1,35 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using Simbad.Utils.Attributes;
-using Simbad.Utils.LookupCore;
 
-namespace Simbad.Utils.Helpers
+using Simbad.Utils.Attributes;
+using Simbad.Utils.Helpers;
+
+namespace Simbad.Utils.LookupCore
 {
-    public static class ConstantClassHelper
+    public static class LookupTableHelper
     {
+        public static LookupTable<string, string> EnumToLookupTable(this Type type)
+        {
+            var toReturn = new LookupTable<string, string>();
+
+            if (!type.IsEnum)
+            {
+                return toReturn;
+            }
+
+            var names = Enum.GetNames(type);
+
+            foreach (var name in names)
+            {
+                var enumValue = Enum.Parse(type, name);
+                toReturn.Add(new LookupRecord<string, string>(enumValue.GetDescription(), ((int)enumValue).ToString(CultureInfo.InvariantCulture)));
+            }
+
+            return toReturn;
+        }
+
         public static LookupTable<string, string> ToLookupTable(this Type type)
         {
             var toReturn = new LookupTable<string, string>();

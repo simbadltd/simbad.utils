@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading;
 
@@ -7,8 +8,6 @@ namespace Simbad.Utils.Domain.Infrastructure
 {
     public abstract class InstantCachedRepository<TEntity> : RepositoryBase<TEntity> where TEntity : EntityBase, IAggregateRoot
     {
-        public event EventHandler CacheInvalidatedFully;
-
         private readonly object _sync = new object();
 
         private IList<TEntity> _cache;
@@ -19,7 +18,7 @@ namespace Simbad.Utils.Domain.Infrastructure
         {
         }
 
-        public void InvalidateAllCache(bool shouldRaiseEvent = true)
+        public void InvalidateAllCache()
         {
             lock (_sync)
             {
@@ -27,21 +26,14 @@ namespace Simbad.Utils.Domain.Infrastructure
                 _map = null;
             }
 
-            if (shouldRaiseEvent)
-            {
-                OnCacheInvalidatedFully();
-            }
+            OnCacheInvalidatedFully();
         }
 
-        private void OnCacheInvalidatedFully()
+        protected virtual void OnCacheInvalidatedFully()
         {
-            if (CacheInvalidatedFully != null)
-            {
-                CacheInvalidatedFully(this, EventArgs.Empty);
-            }
         }
 
-        public override TEntity Get(int id)
+        public override TEntity Get(int id, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
             lock (_sync)
             {

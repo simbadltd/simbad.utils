@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Simbad.Utils.LookupCore
 {
     [Serializable]
-    public class LookupTable<TName, TValue>: List<LookupRecord<TName, TValue>>, ILookupTable<TName, TValue>
+    public class LookupTable<TName, TValue> : List<LookupRecord<TName, TValue>>, ILookupTable<TName, TValue>
     {
         public TValue GetValueByName(TName name)
         {

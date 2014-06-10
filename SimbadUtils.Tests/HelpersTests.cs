@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simbad.Utils.Attributes;
 using Simbad.Utils.Collections;
 using Simbad.Utils.Helpers;
+using Simbad.Utils.LookupCore;
 
 namespace Simbad.Utils.Tests
 {
@@ -123,7 +124,7 @@ namespace Simbad.Utils.Tests
         [TestMethod]
         public void ConstantClassHelperTest()
         {
-            var dic = ConstantClassHelper.ToLookupTable(typeof (TestConstantClass));
+            var dic = typeof(TestConstantClass).ToLookupTable();
             Assert.AreEqual(dic.Count, 3);
             Assert.AreEqual(dic.Any(_ => _.Name == "CONST1_NAME"), true);
             Assert.AreEqual(dic.Any(_ => _.Name == "CONST2_NAME"), true);

@@ -1,4 +1,6 @@
-﻿namespace Simbad.Utils.Domain.Infrastructure
+﻿using System.Data;
+
+namespace Simbad.Utils.Domain.Infrastructure
 {
     /// <summary>
     /// The repository interface.
@@ -14,7 +16,7 @@
         /// <param name="item">
         /// The item.
         /// </param>
-        void Add(TEntity item);
+        void Add(TEntity item, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted);
 
         /// <summary>
         /// Removes the specified item.
@@ -22,7 +24,7 @@
         /// <param name="item">
         /// The item.
         /// </param>
-        void Remove(TEntity item);
+        void Remove(TEntity item, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted);
 
         /// <summary>
         /// The update.
@@ -30,7 +32,7 @@
         /// <param name="item">
         /// The item.
         /// </param>
-        void Update(TEntity item);
+        void Update(TEntity item, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted);
 
         /// <summary>
         /// Gets item.
@@ -38,6 +40,6 @@
         /// <param name="id">
         /// Item identificator
         /// </param>
-        TEntity Get(int id);
+        TEntity Get(int id, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted);
     }
 }

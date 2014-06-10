@@ -1,58 +1,39 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Data;
 
 namespace Simbad.Utils.Domain.Infrastructure
 {
-    public abstract class LazyCachedRepository<TEntity>: RepositoryBase<TEntity> where TEntity : EntityBase, IAggregateRoot
+    public abstract class LazyCachedRepository<TEntity> : RepositoryBase<TEntity> where TEntity : EntityBase, IAggregateRoot
     {
-        public event EventHandler CacheInvalidatedFully;
-
-        public event EventHandler<CacheInvalidatedPartiallyEventArgs> CacheInvalidatedPartially;
-
         protected readonly ConcurrentDictionary<int, TEntity> Cache = new ConcurrentDictionary<int, TEntity>();
 
         protected LazyCachedRepository(IConnectionFactory connectionFactory) : base(connectionFactory)
         {
         }
 
-        public void InvalidateCache(int id, bool shouldRaiseEvent = true)
+        public void InvalidateCache(int id)
         {
             TEntity result;
             Cache.TryRemove(id, out result);
-
-            if (shouldRaiseEvent)
-            {
-                OnCacheInvalidatePartially(id);
-            }
+            OnCacheInvalidatePartially(id);
         }
 
-        private void OnCacheInvalidatePartially(int id)
+        protected virtual void OnCacheInvalidatePartially(int id)
         {
-            if (CacheInvalidatedPartially != null)
-            {
-                CacheInvalidatedPartially(this, new CacheInvalidatedPartiallyEventArgs(id));
-            }
         }
 
-        public void InvalidateAllCache(bool shouldRaiseEvent = true)
+        public void InvalidateAllCache()
         {
             Cache.Clear();
-
-            if (shouldRaiseEvent)
-            {
-                OnCacheInvalidatedFully();
-            }
+            OnCacheInvalidatedFully();
         }
 
-        private void OnCacheInvalidatedFully()
+        protected virtual void OnCacheInvalidatedFully()
         {
-            if (CacheInvalidatedFully != null)
-            {
-                CacheInvalidatedFully(this, new EventArgs());
-            }
         }
 
-        public override TEntity Get(int id)
+        public override TEntity Get(int id, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
             TEntity result;
 

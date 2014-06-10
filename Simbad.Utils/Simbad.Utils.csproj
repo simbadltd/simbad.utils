@@ -30,9 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
@@ -52,13 +57,18 @@
     <Compile Include="Collections\StringTripleTuple.cs" />
     <Compile Include="Collections\TripleTuple.cs" />
     <Compile Include="Collections\TripleTupleList.cs" />
-    <Compile Include="Domain\Infrastructure\CacheInvalidatedPartiallyEventArgs.cs" />
     <Compile Include="Domain\Infrastructure\IConnectionFactory.cs" />
     <Compile Include="Domain\Infrastructure\InstantCachedRepository.cs" />
     <Compile Include="Domain\Infrastructure\LazyCachedRepository.cs" />
     <Compile Include="Domain\Infrastructure\RepositoryBase.cs" />
+    <Compile Include="Extenders\DoubleExtensions.cs" />
+    <Compile Include="Factories\Singleton.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="Helpers\CloneHelper.cs" />
+    <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="Ioc\INinjectModuleBootstrapper.cs" />
+    <Compile Include="Ioc\IocContainerBase.cs" />
+    <Compile Include="License\LicenseHelper.cs" />
     <Compile Include="LookupCore\LookupTable.cs" />
     <Compile Include="LookupCore\LookupRecord.cs" />
     <Compile Include="LookupCore\ILookupTable.cs" />
@@ -77,11 +87,14 @@
     <Compile Include="Extenders\WebOperationContextExtender.cs" />
     <Compile Include="Factories\IMultiton.cs" />
     <Compile Include="Factories\Multiton.cs" />
-    <Compile Include="Helpers\ConstantClassHelper.cs" />
+    <Compile Include="LookupCore\LookupTableHelper.cs" />
     <Compile Include="Helpers\PathHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\WebDownloader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -1,11 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simbad.Utils.Attributes;
-using Simbad.Utils.Helpers;
+using Simbad.Utils.LookupCore;
 
 namespace Simbad.Utils.Tests
 {
     [TestClass]
-    public class ConstantsClassHelperTests
+    public class LookupTableHelperTests
     {
         internal class TestConstantClass
         {
@@ -25,16 +25,42 @@ namespace Simbad.Utils.Tests
             public static string TestContstant5 = "TestConstantValue5";
         }
 
+        internal enum TestEnum
+        {
+            [System.ComponentModel.Description("TestEnumValue1Description")]
+            TestEnumValue1 = 1,
+
+            TestEnumValue2 = 2,
+
+            [System.ComponentModel.Description("TestEnumValue3Description")]
+            TestEnumValue3 = 3,
+        }
+
+        [TestMethod]
+        public void ShouldCreateLookupTableFromEnum()
+        {
+            // Given
+            var targetType = typeof(TestEnum);
+
+            // When
+            var lookupTable = targetType.EnumToLookupTable();
+
+            // Then
+            Assert.AreEqual("1", lookupTable.GetValueByName("TestEnumValue1Description"));
+            Assert.AreEqual("2", lookupTable.GetValueByName("TestEnumValue2"));
+            Assert.AreEqual("3", lookupTable.GetValueByName("TestEnumValue3Description"));
+        }
+
         [TestMethod]
         public void ShouldCreateLookupTable()
         {
-            //Given
-            var targetType = typeof (TestConstantClass);
+            // Given
+            var targetType = typeof(TestConstantClass);
 
-            //When
+            // When
             var lookupTable = targetType.ToLookupTable();
 
-            //Then
+            // Then
             Assert.IsTrue(lookupTable.Count == 2);
             Assert.IsNotNull(lookupTable.GetValueByName("TestConstantName1"));
             Assert.IsNotNull(lookupTable.GetValueByName("TestConstantName2"));
