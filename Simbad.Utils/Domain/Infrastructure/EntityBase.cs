@@ -20,7 +20,6 @@ namespace Simbad.Utils.Domain.Infrastructure
         /// <summary>
         /// Gets a value indicating whether this instance contains in database.
         /// </summary>
-        [DataMember]
         public virtual bool IsNew
         {
             get
