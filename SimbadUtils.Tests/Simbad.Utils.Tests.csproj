@@ -53,6 +53,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="AesEncryptionTests.cs" />
     <Compile Include="ConstantsClassHelperTests.cs" />
     <Compile Include="GuardTests.cs" />
     <Compile Include="HeapTests.cs" />
