@@ -7,12 +7,11 @@ using System.Reflection;
 using Ninject;
 using Ninject.Parameters;
 
-using Simbad.Utils.Factories;
 using Simbad.Utils.Helpers;
 
 namespace Simbad.Utils.Ioc
 {
-    public class IocContainerBase : Singleton<IocContainerBase>
+    public class IocContainerBase
     {
         private readonly StandardKernel _kernel;
 

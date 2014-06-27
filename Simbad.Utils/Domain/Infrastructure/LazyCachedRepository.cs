@@ -39,7 +39,7 @@ namespace Simbad.Utils.Domain.Infrastructure
 
             if (!Cache.TryGetValue(id, out result))
             {
-                result = base.Get(id);
+                result = base.Get(id, isolationLevel);
                 Cache.TryAdd(id, result);
             }
 
