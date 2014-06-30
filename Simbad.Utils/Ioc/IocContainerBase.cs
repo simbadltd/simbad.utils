@@ -8,12 +8,11 @@ using Ninject;
 using Ninject.Parameters;
 using Ninject.Planning.Bindings;
 
-using Simbad.Utils.Factories;
 using Simbad.Utils.Helpers;
 
 namespace Simbad.Utils.Ioc
 {
-    public class IocContainerBase : Singleton<IocContainerBase>
+    public class IocContainerBase
     {
         protected readonly StandardKernel Kernel;
 

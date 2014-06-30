@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading;
@@ -10,7 +9,7 @@ namespace Simbad.Utils.Domain.Infrastructure
     {
         private readonly object _sync = new object();
 
-        private IList<TEntity> _cache;
+        private TEntity[] _cache;
 
         private IDictionary<int, TEntity> _map;
 
@@ -37,7 +36,7 @@ namespace Simbad.Utils.Domain.Infrastructure
         {
             lock (_sync)
             {
-                var map = GetCacheAsMap();
+                var map = GetCacheAsMap(isolationLevel);
 
                 if (map.ContainsKey(id))
                 {
@@ -48,27 +47,27 @@ namespace Simbad.Utils.Domain.Infrastructure
             }
         }
 
-        public IList<TEntity> GetAll()
+        public TEntity[] GetAll(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
             lock (_sync)
             {
-                return new List<TEntity>(GetCacheAsList());
+                return GetCacheAsArray(isolationLevel);
             }
         }
 
-        protected IList<TEntity> GetCacheAsList()
+        protected TEntity[] GetCacheAsArray(IsolationLevel isolationLevel)
         {
-            EnsureCache();
-            return _cache;
+            EnsureCache(isolationLevel);
+            return _cache.ToArray();
         }
 
-        protected IDictionary<int, TEntity> GetCacheAsMap()
+        protected IDictionary<int, TEntity> GetCacheAsMap(IsolationLevel isolationLevel)
         {
-            EnsureCache();
+            EnsureCache(isolationLevel);
             return _map;
         }
 
-        private void EnsureCache()
+        private void EnsureCache(IsolationLevel isolationLevel)
         {
             if (_cache == null)
             {
@@ -76,7 +75,7 @@ namespace Simbad.Utils.Domain.Infrastructure
                 {
                     if (_cache == null)
                     {
-                        var c = InitializeCache();
+                        var c = InitializeCache(isolationLevel);
                         Thread.MemoryBarrier();
                         _cache = c;
                         _map = c.ToDictionary(i => i.Id, i => i);
@@ -85,6 +84,6 @@ namespace Simbad.Utils.Domain.Infrastructure
             }
         }
 
-        protected abstract IList<TEntity> InitializeCache();
+        protected abstract TEntity[] InitializeCache(IsolationLevel isolationLevel);
     }
 }
