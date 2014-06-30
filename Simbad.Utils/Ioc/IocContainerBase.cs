@@ -6,6 +6,7 @@ using System.Reflection;
 
 using Ninject;
 using Ninject.Parameters;
+using Ninject.Planning.Bindings;
 
 using Simbad.Utils.Factories;
 using Simbad.Utils.Helpers;
@@ -14,12 +15,12 @@ namespace Simbad.Utils.Ioc
 {
     public class IocContainerBase : Singleton<IocContainerBase>
     {
-        private readonly StandardKernel _kernel;
+        protected readonly StandardKernel Kernel;
 
         public IocContainerBase()
         {
             var assemblies = GetAssemblies().Select(Assembly.LoadFrom);
-            _kernel = LoadNinjectKernel(assemblies);
+            Kernel = LoadNinjectKernel(assemblies);
         }
 
         protected virtual string[] GetAssemblies()
@@ -29,7 +30,32 @@ namespace Simbad.Utils.Ioc
 
         public T Get<T>(params IParameter[] parameters)
         {
-            return _kernel.Get<T>(parameters);
+            return Kernel.Get<T>(parameters);
+        }
+
+        public T Get<T>(string name, params IParameter[] parameters)
+        {
+            return Kernel.Get<T>(name, parameters);
+        }
+
+        public T Get<T>(Func<IBindingMetadata, bool> constraint, params IParameter[] parameters)
+        {
+            return Kernel.Get<T>(constraint, parameters);
+        }
+
+        public T[] GetAll<T>(params IParameter[] parameters)
+        {
+            return Kernel.GetAll<T>(parameters).ToArray();
+        }
+
+        public T[] GetAll<T>(string name, params IParameter[] parameters)
+        {
+            return Kernel.GetAll<T>(name, parameters).ToArray();
+        }
+
+        public T[] GetAll<T>(Func<IBindingMetadata, bool> constraint, params IParameter[] parameters)
+        {
+            return Kernel.GetAll<T>(constraint, parameters).ToArray();
         }
 
         public static StandardKernel LoadNinjectKernel(IEnumerable<Assembly> assemblies)
