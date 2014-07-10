@@ -41,6 +41,10 @@
     <Compile Include="Collections\StringTripleTuple.cs" />
     <Compile Include="Collections\TripleTuple.cs" />
     <Compile Include="Collections\TripleTupleList.cs" />
+    <Compile Include="Extenders\DateTimeExtender.cs" />
+    <Compile Include="Extenders\DoubleExtensions.cs" />
+    <Compile Include="Extenders\LinqXmlExtender.cs" />
+    <Compile Include="Extenders\StringExtender.cs" />
     <Compile Include="Factories\Singleton.cs" />
     <Compile Include="Helpers\CloneHelper.cs" />
     <Compile Include="OperationResult.cs" />

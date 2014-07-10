@@ -6,7 +6,7 @@
 
         private readonly static object _syncRoot = new object();
 
-        public static T Instace
+        public static T Instance
         {
             get
             {
