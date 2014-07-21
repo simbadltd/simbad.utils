@@ -101,5 +101,12 @@ namespace Simbad.Utils.Extenders
         {
             return new DateTime(year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, dt.Millisecond);
         }
+
+        public static bool IsBetween(this DateTime dt, int h1, int m1, int h2, int m2)
+        {
+            var h = dt.Hour;
+            var m = dt.Minute;
+            return (h > h1 || (h == h1 && m >= m1)) && (h < h2 || (h == h2 && m < m2));
+        }
     }
 }
