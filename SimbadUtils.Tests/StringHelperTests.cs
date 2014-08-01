@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Simbad.Utils.Helpers;
+
+using Simbad.Utils.Utils;
 
 namespace Simbad.Utils.Tests
 {
@@ -10,29 +11,29 @@ namespace Simbad.Utils.Tests
         public void MatchWildcardTest()
         {
             // Positive Tests
-            Assert.IsTrue(StringHelper.MatchWildcard("*", ""));
-            Assert.IsTrue(StringHelper.MatchWildcard("?", " "));
-            Assert.IsTrue(StringHelper.MatchWildcard("*", "a"));
-            Assert.IsTrue(StringHelper.MatchWildcard("*", "ab"));
-            Assert.IsTrue(StringHelper.MatchWildcard("?", "a"));
-            Assert.IsTrue(StringHelper.MatchWildcard("*?", "abc"));
-            Assert.IsTrue(StringHelper.MatchWildcard("?*", "abc"));
-            Assert.IsTrue(StringHelper.MatchWildcard("*abc", "abc"));
-            Assert.IsTrue(StringHelper.MatchWildcard("*abc*", "abc"));
-            Assert.IsTrue(StringHelper.MatchWildcard("*a*bc*", "aXXXbc"));
+            Assert.IsTrue(StringUtils.MatchWildcard("*", ""));
+            Assert.IsTrue(StringUtils.MatchWildcard("?", " "));
+            Assert.IsTrue(StringUtils.MatchWildcard("*", "a"));
+            Assert.IsTrue(StringUtils.MatchWildcard("*", "ab"));
+            Assert.IsTrue(StringUtils.MatchWildcard("?", "a"));
+            Assert.IsTrue(StringUtils.MatchWildcard("*?", "abc"));
+            Assert.IsTrue(StringUtils.MatchWildcard("?*", "abc"));
+            Assert.IsTrue(StringUtils.MatchWildcard("*abc", "abc"));
+            Assert.IsTrue(StringUtils.MatchWildcard("*abc*", "abc"));
+            Assert.IsTrue(StringUtils.MatchWildcard("*a*bc*", "aXXXbc"));
 
             // Negative Tests
-            Assert.IsFalse(StringHelper.MatchWildcard("*a", ""));
-            Assert.IsFalse(StringHelper.MatchWildcard("a*", ""));
-            Assert.IsFalse(StringHelper.MatchWildcard("?", ""));
-            Assert.IsFalse(StringHelper.MatchWildcard("*b*", "a"));
-            Assert.IsFalse(StringHelper.MatchWildcard("b*a", "ab"));
-            Assert.IsFalse(StringHelper.MatchWildcard("??", "a"));
-            Assert.IsFalse(StringHelper.MatchWildcard("*?", ""));
-            Assert.IsFalse(StringHelper.MatchWildcard("??*", "a"));
-            Assert.IsFalse(StringHelper.MatchWildcard("*abc", "abX"));
-            Assert.IsFalse(StringHelper.MatchWildcard("*abc*", "Xbc"));
-            Assert.IsFalse(StringHelper.MatchWildcard("*a*bc*", "ac"));
+            Assert.IsFalse(StringUtils.MatchWildcard("*a", ""));
+            Assert.IsFalse(StringUtils.MatchWildcard("a*", ""));
+            Assert.IsFalse(StringUtils.MatchWildcard("?", ""));
+            Assert.IsFalse(StringUtils.MatchWildcard("*b*", "a"));
+            Assert.IsFalse(StringUtils.MatchWildcard("b*a", "ab"));
+            Assert.IsFalse(StringUtils.MatchWildcard("??", "a"));
+            Assert.IsFalse(StringUtils.MatchWildcard("*?", ""));
+            Assert.IsFalse(StringUtils.MatchWildcard("??*", "a"));
+            Assert.IsFalse(StringUtils.MatchWildcard("*abc", "abX"));
+            Assert.IsFalse(StringUtils.MatchWildcard("*abc*", "Xbc"));
+            Assert.IsFalse(StringUtils.MatchWildcard("*a*bc*", "ac"));
         }
     }
 }

@@ -69,8 +69,9 @@
     <Compile Include="Extenders\TimeZoneExtender.cs" />
     <Compile Include="Factories\Singleton.cs" />
     <Compile Include="Guard.cs" />
-    <Compile Include="Helpers\CloneHelper.cs" />
-    <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="Utils\CloneUtils.cs" />
+    <Compile Include="Utils\EnumUtils.cs" />
+    <Compile Include="Utils\HtmlUtils.cs" />
     <Compile Include="Ioc\INinjectModuleBootstrapper.cs" />
     <Compile Include="Ioc\IocContainerBase.cs" />
     <Compile Include="License\LicenseHelper.cs" />
@@ -93,9 +94,9 @@
     <Compile Include="Factories\IMultiton.cs" />
     <Compile Include="Factories\Multiton.cs" />
     <Compile Include="LookupCore\LookupTableHelper.cs" />
-    <Compile Include="Helpers\PathHelper.cs" />
-    <Compile Include="Helpers\StringHelper.cs" />
-    <Compile Include="Helpers\WebDownloader.cs" />
+    <Compile Include="Utils\PathUtils.cs" />
+    <Compile Include="Utils\StringUtils.cs" />
+    <Compile Include="Utils\WebDownloader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

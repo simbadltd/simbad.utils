@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Simbad.Utils.Helpers
+namespace Simbad.Utils.Utils
 {
-    public static class StringHelper
+    public static class StringUtils
     {
         public static Boolean MatchWildcard(String pattern, String input)
         {

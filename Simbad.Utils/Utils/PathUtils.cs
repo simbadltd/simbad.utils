@@ -2,9 +2,9 @@
 using System.Globalization;
 using System.IO;
 
-namespace Simbad.Utils.Helpers
+namespace Simbad.Utils.Utils
 {
-    public static class PathHelper
+    public static class PathUtils
     {
         public const string APPLICATION_TEMP_ROOT_VIRTUAL_PATH = "~\\tmp\\";
 

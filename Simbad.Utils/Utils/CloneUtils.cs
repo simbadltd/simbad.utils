@@ -2,9 +2,9 @@
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-namespace Simbad.Utils.Helpers
+namespace Simbad.Utils.Utils
 {
-    public static class CloneHelper
+    public static class CloneUtils
     {
         public static T Clone<T>(this T source)
         {

@@ -6,6 +6,26 @@ namespace Simbad.Utils.Extenders
     {
         public const double EPSILON = 0.00001;
 
+        public static bool IsPositive(this double x)
+        {
+            return x > 0;
+        }
+
+        public static bool IsNegative(this double x)
+        {
+            return x < 0;
+        }
+
+        public static bool IsNotZero(this double x)
+        {
+            return !x.IsEqualsTo(0D);
+        }
+
+        public static bool IsZero(this double x)
+        {
+            return x.IsEqualsTo(0D);
+        }
+
         public static bool IsEqualsTo(this double x, double y)
         {
             return Math.Abs(x - y) < EPSILON;

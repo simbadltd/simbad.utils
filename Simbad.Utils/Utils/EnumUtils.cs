@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-namespace Simbad.Utils.Helpers
+namespace Simbad.Utils.Utils
 {
-    public static class EnumHelper
+    public static class EnumUtils
     {
         public static IEnumerable<T> GetValues<T>() where T : struct
         {

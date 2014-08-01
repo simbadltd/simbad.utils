@@ -2,7 +2,7 @@
 using System.IO;
 using System.Net;
 
-namespace Simbad.Utils.Helpers
+namespace Simbad.Utils.Utils
 {
     public static class WebDownloader
     {

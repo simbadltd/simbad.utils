@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simbad.Utils.Attributes;
 using Simbad.Utils.Collections;
-using Simbad.Utils.Helpers;
 using Simbad.Utils.LookupCore;
 
 namespace Simbad.Utils.Tests

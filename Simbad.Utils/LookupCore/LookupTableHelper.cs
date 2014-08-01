@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 
 using Simbad.Utils.Attributes;
-using Simbad.Utils.Helpers;
+using Simbad.Utils.Utils;
 
 namespace Simbad.Utils.LookupCore
 {

@@ -8,7 +8,7 @@ using Ninject;
 using Ninject.Parameters;
 using Ninject.Planning.Bindings;
 
-using Simbad.Utils.Helpers;
+using Simbad.Utils.Utils;
 
 namespace Simbad.Utils.Ioc
 {
@@ -24,7 +24,7 @@ namespace Simbad.Utils.Ioc
 
         protected virtual string[] GetAssemblies()
         {
-            return Directory.GetFiles(PathHelper.GetApplicationRoot());
+            return Directory.GetFiles(PathUtils.GetApplicationRoot());
         }
 
         public T Get<T>(params IParameter[] parameters)
