@@ -27,7 +27,7 @@ namespace Simbad.Utils.LookupCore
                 toReturn.Add(new LookupRecord<string, string>(enumValue.GetDescription(), ((int)enumValue).ToString(CultureInfo.InvariantCulture)));
             }
 
-            return toReturn;
+            return new LookupTable<string, string>(toReturn.OrderBy(i => i.Name));
         }
 
         public static LookupTable<string, string> ToLookupTable(this Type type)
