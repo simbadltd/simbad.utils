@@ -1,4 +1,4 @@
-﻿namespace Simbad.Utils.Domain.Infrastructure
+﻿namespace Simbad.Utils.Domain
 {
     public interface IIdentityObject
     {

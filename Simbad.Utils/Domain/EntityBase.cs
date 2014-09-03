@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
-namespace Simbad.Utils.Domain.Infrastructure
+namespace Simbad.Utils.Domain
 {
     /// <summary>
     /// The base class for domain entities.
@@ -27,6 +26,5 @@ namespace Simbad.Utils.Domain.Infrastructure
                 return Id < 1;
             }
         }
-
     }
 }

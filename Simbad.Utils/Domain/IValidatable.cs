@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Simbad.Utils.Domain.Infrastructure;
 
-namespace Simbad.Utils.Domain.Infrastructure
+namespace Simbad.Utils.Domain
 {
     /// <summary>
     /// IValidatable interface.
@@ -21,6 +21,6 @@ namespace Simbad.Utils.Domain.Infrastructure
         /// <value>
         /// The validation errors.
         /// </value>
-        List<ValidationError> ValidationErrors { get; }
+        ValidationError[] ValidationErrors { get; }
     }
 }

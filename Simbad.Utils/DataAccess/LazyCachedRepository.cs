@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Data;
 
-namespace Simbad.Utils.Domain.Infrastructure
+using Simbad.Utils.Domain;
+
+namespace Simbad.Utils.DataAccess
 {
     public abstract class LazyCachedRepository<TEntity> : RepositoryBase<TEntity> where TEntity : EntityBase, IAggregateRoot
     {

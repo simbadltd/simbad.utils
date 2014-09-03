@@ -1,5 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+using Simbad.Utils.Extenders;
 using Simbad.Utils.Utils;
 
 namespace Simbad.Utils.Tests
@@ -7,6 +10,28 @@ namespace Simbad.Utils.Tests
     [TestClass]
     public class StringHelperTests
     {
+        [TestMethod]
+        public void ExtractBlockBetweenTest()
+        {
+            // Given
+            var srcText =
+                @"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. ";
+
+            var content = @"<!DOCTYPE html>
+<html>
+<body>
+    <div>" +
+                          srcText +
+                          @"</div>
+</html>";
+
+            // When
+            var extractedBlock = content.ExtractBlockBetween("<div>", "</div>");
+
+            // Then
+            Assert.AreEqual(srcText, extractedBlock);
+        }
+
         [TestMethod]
         public void MatchWildcardTest()
         {

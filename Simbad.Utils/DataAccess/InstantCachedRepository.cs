@@ -1,17 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Linq;
 using System.Threading;
 
-namespace Simbad.Utils.Domain.Infrastructure
+using Simbad.Utils.Domain;
+
+namespace Simbad.Utils.DataAccess
 {
     public abstract class InstantCachedRepository<TEntity> : RepositoryBase<TEntity> where TEntity : EntityBase, IAggregateRoot
     {
         private readonly object _sync = new object();
 
         private TEntity[] _cache;
-
-        private IDictionary<int, TEntity> _map;
 
         protected InstantCachedRepository(IConnectionFactory connectionFactory) : base(connectionFactory)
         {
@@ -22,7 +21,6 @@ namespace Simbad.Utils.Domain.Infrastructure
             lock (_sync)
             {
                 _cache = null;
-                _map = null;
             }
 
             OnCacheInvalidatedFully();
@@ -36,14 +34,11 @@ namespace Simbad.Utils.Domain.Infrastructure
         {
             lock (_sync)
             {
-                var map = GetCacheAsMap(isolationLevel);
+                EnsureCache(isolationLevel);
 
-                if (map.ContainsKey(id))
-                {
-                    return map[id];
-                }
+                var entity = _cache.FirstOrDefault(e => e.Id == id);
 
-                return null;
+                return entity;
             }
         }
 
@@ -51,20 +46,10 @@ namespace Simbad.Utils.Domain.Infrastructure
         {
             lock (_sync)
             {
-                return GetCacheAsArray(isolationLevel);
+                EnsureCache(isolationLevel);
+
+                return _cache;
             }
-        }
-
-        protected TEntity[] GetCacheAsArray(IsolationLevel isolationLevel)
-        {
-            EnsureCache(isolationLevel);
-            return _cache.ToArray();
-        }
-
-        protected IDictionary<int, TEntity> GetCacheAsMap(IsolationLevel isolationLevel)
-        {
-            EnsureCache(isolationLevel);
-            return _map;
         }
 
         private void EnsureCache(IsolationLevel isolationLevel)
@@ -78,12 +63,28 @@ namespace Simbad.Utils.Domain.Infrastructure
                         var c = InitializeCache(isolationLevel);
                         Thread.MemoryBarrier();
                         _cache = c;
-                        _map = c.ToDictionary(i => i.Id, i => i);
                     }
                 }
             }
         }
 
-        protected abstract TEntity[] InitializeCache(IsolationLevel isolationLevel);
+        private TEntity[] InitializeCache(IsolationLevel isolationLevel)
+        {
+            using (var connection = ConnectionFactory.CreateConnection())
+            {
+                connection.Open();
+
+                using (var transaction = connection.BeginTransaction(isolationLevel))
+                {
+                    var result = InitializeCacheInternal(connection, transaction, isolationLevel);
+
+                    transaction.Commit();
+
+                    return result;
+                }
+            }
+        }
+
+        protected abstract TEntity[] InitializeCacheInternal(IDbConnection connection, IDbTransaction transaction, IsolationLevel isolationLevel);
     }
 }

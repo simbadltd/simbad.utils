@@ -105,5 +105,29 @@ namespace Simbad.Utils.Extenders
             var bytes = encoding.GetBytes(str);
             return new MemoryStream(bytes);
         }
+
+        public static string ExtractBlockBetween(
+            this string str,
+            string startTag,
+            string endTag,
+            StringComparison stringComparison = StringComparison.OrdinalIgnoreCase)
+        {
+            if (string.IsNullOrEmpty(startTag) || string.IsNullOrEmpty(endTag))
+            {
+                return string.Empty;
+            }
+
+            if (string.IsNullOrEmpty(str))
+            {
+                return string.Empty;
+            }
+
+            var start = str.IndexOf(startTag, stringComparison) + startTag.Length;
+            var end = str.IndexOf(endTag, start, stringComparison);
+
+            var result = str.Substring(start, end - start);
+
+            return result;
+        }
     }
 }

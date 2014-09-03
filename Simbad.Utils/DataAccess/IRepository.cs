@@ -1,6 +1,8 @@
 ﻿using System.Data;
 
-namespace Simbad.Utils.Domain.Infrastructure
+using Simbad.Utils.Domain;
+
+namespace Simbad.Utils.DataAccess
 {
     /// <summary>
     /// The repository interface.

@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace Simbad.Utils.Domain.Infrastructure
+namespace Simbad.Utils.DataAccess
 {
     public interface IConnectionFactory
     {
