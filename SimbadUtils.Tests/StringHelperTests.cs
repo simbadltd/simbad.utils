@@ -33,6 +33,30 @@ namespace Simbad.Utils.Tests
         }
 
         [TestMethod]
+        public void InsertBlockBetweenTest()
+        {
+            // Given
+            var srcText =
+                @"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. ";
+
+            var content = @"<!DOCTYPE html>
+<html>
+<body>
+    <div>" +
+                          srcText +
+                          @"</div>
+</html>";
+
+            // When
+            var insertedContent = content.InsertBlockBetween("123", "<div>", "</div>");
+
+            // Then
+            Assert.IsTrue(insertedContent.Contains("123"));
+            Assert.IsFalse(insertedContent.Contains("<div>"));
+            Assert.IsFalse(insertedContent.Contains("</div>"));
+        }
+
+        [TestMethod]
         public void MatchWildcardTest()
         {
             // Positive Tests

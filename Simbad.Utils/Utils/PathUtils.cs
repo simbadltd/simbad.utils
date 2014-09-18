@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Simbad.Utils.Utils
 {
@@ -9,6 +10,8 @@ namespace Simbad.Utils.Utils
         public const string APPLICATION_TEMP_ROOT_VIRTUAL_PATH = "~\\tmp\\";
 
         public const string DEFAULT_BASE_PATH_SYMBOL = "~";
+
+        private static string _invalidChars = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
 
         public static string ToAbsolutePath(string path)
         {
@@ -86,6 +89,12 @@ namespace Simbad.Utils.Utils
             }
 
             return path;
+        }
+
+        public static string RemoveInvalidChars(string path)
+        {
+            var r = new Regex(string.Format("[{0}]", Regex.Escape(_invalidChars)));
+            return r.Replace(path, string.Empty);
         }
     }
 }

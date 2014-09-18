@@ -129,5 +129,52 @@ namespace Simbad.Utils.Extenders
 
             return result;
         }
+
+        public static string InsertBlockBetween(
+            this string str,
+            string insertContent,
+            string startTag,
+            string endTag,
+            StringComparison stringComparison = StringComparison.OrdinalIgnoreCase,
+            bool cutTags = true)
+        {
+            if (string.IsNullOrEmpty(startTag) || string.IsNullOrEmpty(endTag))
+            {
+                return string.Empty;
+            }
+
+            if (string.IsNullOrEmpty(str))
+            {
+                return string.Empty;
+            }
+
+            var start = str.IndexOf(startTag, stringComparison);
+
+            if (cutTags == false)
+            {
+                start = start + startTag.Length;
+            }
+
+            var end = str.IndexOf(endTag, start + startTag.Length, stringComparison);
+
+            if (cutTags)
+            {
+                end = end + endTag.Length;
+            }
+
+            var result = str.Remove(start, end - start).Insert(start, insertContent);
+
+            return result;
+        }
+
+        public static string EnsureNotNull(this string s)
+        {
+            if (s == null)
+            {
+                return string.Empty;
+            }
+
+            return s;
+        }
     }
 }
