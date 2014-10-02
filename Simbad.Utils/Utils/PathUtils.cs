@@ -11,7 +11,7 @@ namespace Simbad.Utils.Utils
 
         public const string DEFAULT_BASE_PATH_SYMBOL = "~";
 
-        private static string _invalidChars = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
+        private static readonly string _invalidChars = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
 
         public static string ToAbsolutePath(string path)
         {
@@ -44,7 +44,6 @@ namespace Simbad.Utils.Utils
 
         public static string GetApplicationRoot()
         {
-            //return AppDomain.CurrentDomain.BaseDirectory;
             return AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
         }
 

@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
     </Reference>
@@ -58,6 +61,7 @@
     <Compile Include="Collections\StringTripleTuple.cs" />
     <Compile Include="Collections\TripleTuple.cs" />
     <Compile Include="Collections\TripleTupleList.cs" />
+    <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="DataAccess\IConnectionFactory.cs" />
     <Compile Include="DataAccess\InstantCachedRepository.cs" />
     <Compile Include="DataAccess\LazyCachedRepository.cs" />
@@ -71,6 +75,7 @@
     <Compile Include="Guard.cs" />
     <Compile Include="Utils\CloneUtils.cs" />
     <Compile Include="Utils\EnumUtils.cs" />
+    <Compile Include="Utils\FileUtils.cs" />
     <Compile Include="Utils\HtmlUtils.cs" />
     <Compile Include="Ioc\INinjectModuleBootstrapper.cs" />
     <Compile Include="Ioc\IocContainerBase.cs" />
