@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading;
 
@@ -10,7 +11,7 @@ namespace Simbad.Utils.DataAccess
     {
         private readonly object _sync = new object();
 
-        private TEntity[] _cache;
+        private ICollection<TEntity> _cache;
 
         protected InstantCachedRepository(IConnectionFactory connectionFactory) : base(connectionFactory)
         {
@@ -42,7 +43,7 @@ namespace Simbad.Utils.DataAccess
             }
         }
 
-        public TEntity[] GetAll(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
+        public ICollection<TEntity> GetAll(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
             lock (_sync)
             {
@@ -68,23 +69,20 @@ namespace Simbad.Utils.DataAccess
             }
         }
 
-        private TEntity[] InitializeCache(IsolationLevel isolationLevel)
+        private ICollection<TEntity> InitializeCache(IsolationLevel isolationLevel)
         {
-            using (var connection = ConnectionFactory.CreateConnection())
-            {
-                connection.Open();
+            var result = CallInTransaction(
+                isolationLevel,
+                (connection, transaction) =>
+                    {
+                        var toReturn = InitializeCacheInternal(connection, transaction, isolationLevel);
+                        transaction.Commit();
+                        return toReturn;
+                    });
 
-                using (var transaction = connection.BeginTransaction(isolationLevel))
-                {
-                    var result = InitializeCacheInternal(connection, transaction, isolationLevel);
-
-                    transaction.Commit();
-
-                    return result;
-                }
-            }
+            return result;
         }
 
-        protected abstract TEntity[] InitializeCacheInternal(IDbConnection connection, IDbTransaction transaction, IsolationLevel isolationLevel);
+        protected abstract ICollection<TEntity> InitializeCacheInternal(IDbConnection connection, IDbTransaction transaction, IsolationLevel isolationLevel);
     }
 }

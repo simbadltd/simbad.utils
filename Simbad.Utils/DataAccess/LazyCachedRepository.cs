@@ -17,10 +17,10 @@ namespace Simbad.Utils.DataAccess
         {
             TEntity result;
             Cache.TryRemove(id, out result);
-            OnCacheInvalidatePartially(id);
+            OnCacheInvalidatedPartially(id);
         }
 
-        protected virtual void OnCacheInvalidatePartially(int id)
+        protected virtual void OnCacheInvalidatedPartially(int id)
         {
         }
 

@@ -3,37 +3,48 @@ using System.IO;
 
 using Newtonsoft.Json;
 
-using Simbad.Utils.Factories;
 using Simbad.Utils.Utils;
 
 namespace Simbad.Utils.Configuration
 {
-    public class ConfigurationManager<T> : Singleton<ConfigurationManager<T>>
+    public class ConfigurationManager<T>
         where T : class, new()
     {
         public const string DEFAULT_CONFIGURATION_FILE = "~\\settings.conf";
 
-        private static readonly object _syncRoot = new object();
+        private static readonly Lazy<ConfigurationManager<T>> _current = new Lazy<ConfigurationManager<T>>(CurrentFactory, true);
 
-        private volatile T _settings;
+        private Lazy<T> _settings;
+
+        public ConfigurationManager()
+        {
+            _settings = new Lazy<T>(SettingsFactory, true);
+        }
+
+        public static ConfigurationManager<T> Current
+        {
+            get
+            {
+                return _current.Value;
+            }
+        }
 
         public T Settings
         {
             get
             {
-                if (_settings == null)
-                {
-                    lock (_syncRoot)
-                    {
-                        if (_settings == null)
-                        {
-                            _settings = Load();
-                        }
-                    }
-                }
-
-                return _settings;
+                return _settings.Value;
             }
+        }
+
+        private static ConfigurationManager<T> CurrentFactory()
+        {
+            return new ConfigurationManager<T>();
+        }
+
+        private T SettingsFactory()
+        {
+            return Load();
         }
 
         public T Load(string configurationFile = DEFAULT_CONFIGURATION_FILE)
@@ -63,11 +74,7 @@ namespace Simbad.Utils.Configuration
         public void Save(T settings, string configurationFile = DEFAULT_CONFIGURATION_FILE)
         {
             File.WriteAllText(PathUtils.ToAbsolutePath(configurationFile), TrySerialize(settings));
-
-            lock (_syncRoot)
-            {
-                _settings = null;
-            }
+            _settings = new Lazy<T>(SettingsFactory);
         }
 
         private static T TryDeserialize(string json)

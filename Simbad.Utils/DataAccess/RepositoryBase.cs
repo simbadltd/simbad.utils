@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 
 using Simbad.Utils.Domain;
 
@@ -13,97 +14,115 @@ namespace Simbad.Utils.DataAccess
             ConnectionFactory = connectionFactory;
         }
 
-        public void Persist(TEntity item, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
+        public int Persist(TEntity item, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
             if (item.IsNew)
             {
-                Add(item, isolationLevel);
+                return Add(item, isolationLevel);
             }
             else
             {
                 Update(item, isolationLevel);
+                return item.Id;
             }
         }
 
-        public void Add(TEntity item, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
+        public int Add(TEntity item, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
-            using (var connection = ConnectionFactory.CreateConnection())
-            {
-                connection.Open();
+            var result = CallInTransaction(
+                isolationLevel,
+                (connection, transaction) =>
+                    {
+                        SetSystemFields(item, connection, transaction);
+                        var toReturn = AddInternal(item, connection, transaction);
+                        transaction.Commit();
+                        return toReturn;
+                    });
 
-                using (var transaction = connection.BeginTransaction(isolationLevel))
-                {
-                    SetSystemFields(item, connection, transaction);
-                    AddInternal(item, connection, transaction);
-                    transaction.Commit();
-                }
-            }
+            return result;
         }
 
         protected virtual void SetSystemFields(TEntity item, IDbConnection connection, IDbTransaction transaction)
         {
         }
 
-        public virtual void AddInternal(TEntity item, IDbConnection connection, IDbTransaction transaction)
-        {
-        }
+        public abstract int AddInternal(TEntity item, IDbConnection connection, IDbTransaction transaction);
 
         public void Update(TEntity item, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
-            using (var connection = ConnectionFactory.CreateConnection())
-            {
-                connection.Open();
-
-                using (var transaction = connection.BeginTransaction(isolationLevel))
-                {
-                    SetSystemFields(item, connection, transaction);
-                    UpdateInternal(item, connection, transaction);
-                    transaction.Commit();
-                }
-            }
+            CallInTransaction(
+                isolationLevel,
+                (connection, transaction) =>
+                    {
+                        SetSystemFields(item, connection, transaction);
+                        UpdateInternal(item, connection, transaction);
+                        transaction.Commit();
+                    });
         }
 
-        public virtual void UpdateInternal(TEntity item, IDbConnection connection, IDbTransaction transaction)
-        {
-        }
+        public abstract void UpdateInternal(TEntity item, IDbConnection connection, IDbTransaction transaction);
 
         public void Remove(TEntity item, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
-            using (var connection = ConnectionFactory.CreateConnection())
-            {
-                connection.Open();
-
-                using (var transaction = connection.BeginTransaction(isolationLevel))
-                {
-                    RemoveInternal(item, connection, transaction);
-                    transaction.Commit();
-                }
-            }
+            CallInTransaction(
+                isolationLevel,
+                (connection, transaction) =>
+                    {
+                        RemoveInternal(item, connection, transaction);
+                        transaction.Commit();
+                    });
         }
 
-        public virtual void RemoveInternal(TEntity item, IDbConnection connection, IDbTransaction transaction)
-        {
-        }
+        public abstract void RemoveInternal(TEntity item, IDbConnection connection, IDbTransaction transaction);
 
         public virtual TEntity Get(int id, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
-            using (var connection = ConnectionFactory.CreateConnection())
-            {
-                connection.Open();
+            var result = CallInTransaction(
+                isolationLevel,
+                (connection, transaction) =>
+                    {
+                        var toReturn = GetInternal(id, connection, transaction);
+                        transaction.Commit();
+                        return toReturn;
+                    });
 
-                using (var transaction = connection.BeginTransaction(isolationLevel))
-                {
-                    var result = GetInternal(id, connection, transaction);
-                    transaction.Commit();
-
-                    return result;
-                }
-            }
+            return result;
         }
 
         public virtual TEntity GetInternal(int id, IDbConnection connection, IDbTransaction transaction)
         {
             return null;
+        }
+
+        protected void CallInTransaction(IsolationLevel isolationLevel, Action<IDbConnection, IDbTransaction> action)
+        {
+            using (var connection = ConnectionFactory.CreateConnection())
+            {
+                connection.Open();
+
+                using (var transaction = connection.BeginTransaction(isolationLevel))
+                {
+                    action(connection, transaction);
+
+                    connection.Close();
+                }
+            }
+        }
+
+        protected T CallInTransaction<T>(IsolationLevel isolationLevel, Func<IDbConnection, IDbTransaction, T> action)
+        {
+            using (var connection = ConnectionFactory.CreateConnection())
+            {
+                connection.Open();
+
+                using (var transaction = connection.BeginTransaction(isolationLevel))
+                {
+                    var result = action(connection, transaction);
+                    connection.Close();
+
+                    return result;
+                }
+            }
         }
     }
 }
