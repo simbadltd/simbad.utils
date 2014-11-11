@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 
 using Ninject;
+using Ninject.Modules;
 using Ninject.Parameters;
 using Ninject.Planning.Bindings;
 
@@ -18,13 +19,17 @@ namespace Simbad.Utils.Ioc
 
         public IocContainerBase()
         {
-            var assemblies = GetAssemblies().Select(Assembly.LoadFrom);
-            Kernel = LoadNinjectKernel(assemblies);
         }
 
-        protected virtual string[] GetAssemblies()
+        public IocContainerBase(string assembliesWildCard, INinjectSettings settings, params INinjectModule[] modules)
         {
-            return Directory.GetFiles(PathUtils.GetApplicationRoot());
+            var assemblies = GetAssemblies(assembliesWildCard).Select(Assembly.LoadFrom).ToList();
+            Kernel = LoadNinjectKernel(assemblies, settings, modules);
+        }
+
+        protected ICollection<string> GetAssemblies(string assembliesWildCard)
+        {
+            return Directory.GetFiles(PathUtils.GetApplicationRoot()).Where(f => StringUtils.MatchWildcard(assembliesWildCard, f)).ToList();
         }
 
         public T Get<T>(params IParameter[] parameters)
@@ -57,9 +62,9 @@ namespace Simbad.Utils.Ioc
             return Kernel.GetAll<T>(constraint, parameters).ToArray();
         }
 
-        public static StandardKernel LoadNinjectKernel(IEnumerable<Assembly> assemblies)
+        protected StandardKernel LoadNinjectKernel(IEnumerable<Assembly> assemblies, INinjectSettings settings, params INinjectModule[] modules)
         {
-            var standardKernel = new StandardKernel();
+            var standardKernel = new StandardKernel(settings, modules);
             foreach (var assembly in assemblies)
             {
                 assembly.GetTypes()

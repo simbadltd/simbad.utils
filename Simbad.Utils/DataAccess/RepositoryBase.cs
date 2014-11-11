@@ -75,13 +75,14 @@ namespace Simbad.Utils.DataAccess
 
         public abstract void RemoveInternal(TEntity item, IDbConnection connection, IDbTransaction transaction);
 
-        public virtual TEntity Get(int id, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
+        public TEntity Get(int id, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
             var result = CallInTransaction(
                 isolationLevel,
                 (connection, transaction) =>
                     {
                         var toReturn = GetInternal(id, connection, transaction);
+                        Fill(toReturn, connection, transaction);
                         transaction.Commit();
                         return toReturn;
                     });
@@ -89,10 +90,11 @@ namespace Simbad.Utils.DataAccess
             return result;
         }
 
-        public virtual TEntity GetInternal(int id, IDbConnection connection, IDbTransaction transaction)
+        public virtual void Fill(TEntity item, IDbConnection connection, IDbTransaction transaction)
         {
-            return null;
         }
+
+        public abstract TEntity GetInternal(int id, IDbConnection connection, IDbTransaction transaction);
 
         protected void CallInTransaction(IsolationLevel isolationLevel, Action<IDbConnection, IDbTransaction> action)
         {

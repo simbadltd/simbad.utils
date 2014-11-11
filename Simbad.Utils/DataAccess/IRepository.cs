@@ -44,6 +44,8 @@ namespace Simbad.Utils.DataAccess
         /// </param>
         TEntity Get(int id, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted);
 
+        TEntity GetInternal(int id, IDbConnection connection, IDbTransaction transaction);
+
         /// <summary>
         /// Add or update item. Depend on IsNew flag.
         /// </summary>
@@ -51,5 +53,11 @@ namespace Simbad.Utils.DataAccess
         /// <param name="isolationLevel"></param>
         /// <returns></returns>
         int Persist(TEntity item, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted);
+
+        int AddInternal(TEntity item, IDbConnection connection, IDbTransaction transaction);
+
+        void UpdateInternal(TEntity item, IDbConnection connection, IDbTransaction transaction);
+
+        void RemoveInternal(TEntity item, IDbConnection connection, IDbTransaction transaction);
     }
 }

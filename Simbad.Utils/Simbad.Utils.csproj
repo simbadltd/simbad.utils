@@ -30,11 +30,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LinFu.DynamicProxy">
+      <HintPath>..\packages\LinFu.DynamicProxy.OfficialRelease.1.0.5\lib\net\LinFu.DynamicProxy.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Extensions.Interception">
+      <HintPath>..\packages\Ninject.Extensions.Interception.3.2.0.0\lib\net40\Ninject.Extensions.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Extensions.Interception.LinFu">
+      <HintPath>..\packages\Ninject.Extensions.Interception.Linfu.3.2.0.0\lib\net40\Ninject.Extensions.Interception.LinFu.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -63,8 +72,6 @@
     <Compile Include="Collections\TripleTupleList.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="DataAccess\IConnectionFactory.cs" />
-    <Compile Include="DataAccess\InstantCachedRepository.cs" />
-    <Compile Include="DataAccess\LazyCachedRepository.cs" />
     <Compile Include="DataAccess\RepositoryBase.cs" />
     <Compile Include="Encryption\AesEncryption.cs" />
     <Compile Include="Encryption\ConfigProtection.cs" />
@@ -72,6 +79,13 @@
     <Compile Include="Extenders\DoubleExtensions.cs" />
     <Compile Include="Extenders\TimeZoneExtender.cs" />
     <Compile Include="Guard.cs" />
+    <Compile Include="Ioc\Attributes\AffectedClassCacheAttribute.cs" />
+    <Compile Include="Ioc\Attributes\AffectedCurrentClassCacheAttribute.cs" />
+    <Compile Include="Ioc\Attributes\AffectedMethodCacheAttribute.cs" />
+    <Compile Include="Ioc\Attributes\CacheAttribute.cs" />
+    <Compile Include="Ioc\Interceptors\AffectedClassCachingInterceptor.cs" />
+    <Compile Include="Ioc\Interceptors\CachingInterceptor.cs" />
+    <Compile Include="Utils\NameUtil.cs" />
     <Compile Include="Utils\CloneUtils.cs" />
     <Compile Include="Utils\EnumUtils.cs" />
     <Compile Include="Utils\FileUtils.cs" />
@@ -109,7 +123,12 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)\Collections\" "$(SolutionDir)Simbad.Utils.Silverlight\Collections\"
-copy "$(ProjectDir)\Extenders\" "$(SolutionDir)Simbad.Utils.Silverlight\Extenders\"</PostBuildEvent>
+copy "$(ProjectDir)\Extenders\" "$(SolutionDir)Simbad.Utils.Silverlight\Extenders\"
+copy "$(ProjectDir)\Utils\NameUtil.cs" "$(SolutionDir)Simbad.Utils.Silverlight\Helpers\NameUtil.cs"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
