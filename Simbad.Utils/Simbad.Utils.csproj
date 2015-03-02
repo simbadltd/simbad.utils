@@ -85,6 +85,8 @@
     <Compile Include="Ioc\Attributes\CacheAttribute.cs" />
     <Compile Include="Ioc\Interceptors\AffectedClassCachingInterceptor.cs" />
     <Compile Include="Ioc\Interceptors\CachingInterceptor.cs" />
+    <Compile Include="PropertyCopier.cs" />
+    <Compile Include="PropertyCopy.cs" />
     <Compile Include="Utils\NameUtil.cs" />
     <Compile Include="Utils\CloneUtils.cs" />
     <Compile Include="Utils\EnumUtils.cs" />
