@@ -86,6 +86,7 @@
     <Compile Include="Ioc\Interceptors\AffectedClassCachingInterceptor.cs" />
     <Compile Include="Ioc\Interceptors\CachingInterceptor.cs" />
     <Compile Include="PropertyCopier.cs" />
+    <Compile Include="MaybeMonad.cs" />
     <Compile Include="PropertyCopy.cs" />
     <Compile Include="Utils\NameUtil.cs" />
     <Compile Include="Utils\CloneUtils.cs" />
@@ -126,7 +127,8 @@
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)\Collections\" "$(SolutionDir)Simbad.Utils.Silverlight\Collections\"
 copy "$(ProjectDir)\Extenders\" "$(SolutionDir)Simbad.Utils.Silverlight\Extenders\"
-copy "$(ProjectDir)\Utils\NameUtil.cs" "$(SolutionDir)Simbad.Utils.Silverlight\Helpers\NameUtil.cs"</PostBuildEvent>
+copy "$(ProjectDir)\Utils\NameUtil.cs" "$(SolutionDir)Simbad.Utils.Silverlight\Helpers\NameUtil.cs"
+copy "$(ProjectDir)\MaybeMonad.cs" "$(SolutionDir)Simbad.Utils.Silverlight\MaybeMonad.cs"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>
