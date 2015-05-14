@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JetBrains.Annotations">
+      <HintPath>..\libs\JetBrains.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="LinFu.DynamicProxy">
       <HintPath>..\packages\LinFu.DynamicProxy.OfficialRelease.1.0.5\lib\net\LinFu.DynamicProxy.dll</HintPath>
     </Reference>
@@ -77,6 +80,7 @@
     <Compile Include="Encryption\ConfigProtection.cs" />
     <Compile Include="Encryption\Md5Encryption.cs" />
     <Compile Include="Extenders\DoubleExtensions.cs" />
+    <Compile Include="Extenders\EnumerableExtender.cs" />
     <Compile Include="Extenders\TimeZoneExtender.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="Ioc\Attributes\AffectedClassCacheAttribute.cs" />

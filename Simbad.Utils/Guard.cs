@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq.Expressions;
+using JetBrains.Annotations;
 
 namespace Simbad.Utils
 {
     public static class Guard
     {
+
         public static void NotNullOrEmpty(Expression<Func<string>> parameterExpression)
         {
             var value = parameterExpression.Compile()();
@@ -25,6 +27,7 @@ namespace Simbad.Utils
             NotNull(parameterValue, parameterName);
         }
 
+        [ContractAnnotation("parameterValue:null => halt")]
         public static void NotNull<T>(T parameterValue, string parameterName) where T: class
         {
             if (parameterValue == null)
@@ -41,6 +44,7 @@ namespace Simbad.Utils
             EnsureHasValue(parameterValue, parameterName);
         }
 
+        [ContractAnnotation("parameterValue:null => halt")]
         public static void EnsureHasValue<T>(T? parameterValue, string parameterName) where T : struct
         {
             if (!parameterValue.HasValue)

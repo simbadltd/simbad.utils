@@ -5,6 +5,7 @@ using Simbad.Utils.Domain;
 
 namespace Simbad.Utils.DataAccess
 {
+
     public abstract class RepositoryBase<TEntity> : IRepository<TEntity> where TEntity : EntityBase, IAggregateRoot
     {
         protected readonly IConnectionFactory ConnectionFactory;

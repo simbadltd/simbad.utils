@@ -48,6 +48,7 @@
     <Compile Include="Collections\TripleTupleList.cs" />
     <Compile Include="Extenders\DateTimeExtender.cs" />
     <Compile Include="Extenders\DoubleExtensions.cs" />
+    <Compile Include="Extenders\EnumerableExtender.cs" />
     <Compile Include="Extenders\LinqXmlExtender.cs" />
     <Compile Include="Extenders\StringExtender.cs" />
     <Compile Include="Helpers\CloneHelper.cs" />
