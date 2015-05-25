@@ -74,8 +74,6 @@
     <Compile Include="Collections\TripleTuple.cs" />
     <Compile Include="Collections\TripleTupleList.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
-    <Compile Include="DataAccess\IConnectionFactory.cs" />
-    <Compile Include="DataAccess\RepositoryBase.cs" />
     <Compile Include="Encryption\AesEncryption.cs" />
     <Compile Include="Encryption\ConfigProtection.cs" />
     <Compile Include="Encryption\Md5Encryption.cs" />
@@ -103,12 +101,6 @@
     <Compile Include="LookupCore\LookupTable.cs" />
     <Compile Include="LookupCore\LookupRecord.cs" />
     <Compile Include="LookupCore\ILookupTable.cs" />
-    <Compile Include="Domain\EntityBase.cs" />
-    <Compile Include="Domain\IAggregateRoot.cs" />
-    <Compile Include="Domain\IIdentityObject.cs" />
-    <Compile Include="DataAccess\IRepository.cs" />
-    <Compile Include="Domain\IValidatable.cs" />
-    <Compile Include="Domain\ValidationError.cs" />
     <Compile Include="Exceptions\BusinessException.cs" />
     <Compile Include="Extenders\DateTimeExtender.cs" />
     <Compile Include="Extenders\ImageExtender.cs" />
