@@ -6,7 +6,7 @@ using DapperExtensions;
 
 namespace Simbad.Utils.Orm
 {
-    public abstract class RepositoryBase<TEntity, TId> : IRepository<TEntity, TId> where TEntity : class, IEntity<TId>, IAggregationRoot
+    public abstract class RepositoryBase<TEntity, TId, TContext> : IRepository<TEntity, TId, TContext> where TEntity : class, IEntity<TId>, IAggregationRoot
     {
         protected int? CommandTimeout { get; private set; }
 
@@ -23,41 +23,91 @@ namespace Simbad.Utils.Orm
 
         public TEntity FindSingle(ISpecification<TEntity, TId> specification = null)
         {
-            return FindSingle(GroupOperator.And, specification);
+            return
+                CallInTransactionAndReturn(
+                    (connection, transaction) =>
+                        FindSingle(connection, transaction, GroupOperator.And, GetDefaultContext(), specification));
+        }
+
+        public TEntity FindSingle(TContext context, ISpecification<TEntity, TId> specification = null)
+        {
+            return
+                CallInTransactionAndReturn(
+                    (connection, transaction) =>
+                        FindSingle(connection, transaction, GroupOperator.And, context, specification));
         }
 
         public TEntity FindSingle(IDbConnection connection, IDbTransaction transaction, ISpecification<TEntity, TId> specification = null)
         {
-            return FindSingle(connection, transaction, GroupOperator.And, specification);
+            return FindSingle(connection, transaction, GroupOperator.And, GetDefaultContext(), specification);
+        }
+
+        public TEntity FindSingle(GroupOperator op, TContext context, params ISpecification<TEntity, TId>[] specifications)
+        {
+            return CallInTransactionAndReturn((connection, transaction) => FindSingle(connection, transaction, op, context, specifications));
         }
 
         public TEntity FindSingle(GroupOperator op, params ISpecification<TEntity, TId>[] specifications)
         {
-            return CallInTransactionAndReturn((connection, transaction) => FindSingle(connection, transaction, op, specifications));
+            return CallInTransactionAndReturn((connection, transaction) => FindSingle(connection, transaction, op, GetDefaultContext(), specifications));
         }
 
         public TEntity FindSingle(IDbConnection connection, IDbTransaction transaction, GroupOperator op,
             params ISpecification<TEntity, TId>[] specifications)
         {
-            return FindMany(connection, transaction, op, specifications).SingleOrDefault();
+            return FindSingle(connection, transaction, op, GetDefaultContext(), specifications);
+        }
+
+        public TEntity FindSingle(IDbConnection connection, IDbTransaction transaction, TContext context,
+            ISpecification<TEntity, TId> specification = null)
+        {
+            return FindSingle(connection, transaction, GroupOperator.And, context, specification);
+        }
+
+        public TEntity FindSingle(IDbConnection connection, IDbTransaction transaction, GroupOperator op, TContext context,
+            params ISpecification<TEntity, TId>[] specifications)
+        {
+            return FindMany(connection, transaction, op, context, specifications).SingleOrDefault();
         }
 
         public ICollection<TEntity> FindMany(ISpecification<TEntity, TId> specification = null)
         {
-            return FindMany(GroupOperator.And, specification);
+            return CallInTransactionAndReturn((connection, transaction) => FindMany(connection, transaction, GroupOperator.And, GetDefaultContext(), specification));
+        }
+
+        public ICollection<TEntity> FindMany(TContext context, ISpecification<TEntity, TId> specification = null)
+        {
+            return CallInTransactionAndReturn((connection, transaction) => FindMany(connection, transaction, GroupOperator.And, context, specification));
+        }
+
+        public ICollection<TEntity> FindMany(IDbConnection connection, IDbTransaction transaction, TContext context,
+            ISpecification<TEntity, TId> specification = null)
+        {
+            return FindMany(connection, transaction, GroupOperator.And, context, specification);
         }
 
         public ICollection<TEntity> FindMany(GroupOperator op, params ISpecification<TEntity, TId>[] specifications)
         {
-            return CallInTransactionAndReturn((connection, transaction) => FindMany(connection, transaction, op, specifications));
+            return CallInTransactionAndReturn((connection, transaction) => FindMany(connection, transaction, op, GetDefaultContext(), specifications));
+        }
+
+        public ICollection<TEntity> FindMany(GroupOperator op, TContext context, params ISpecification<TEntity, TId>[] specifications)
+        {
+            return CallInTransactionAndReturn((connection, transaction) => FindMany(connection, transaction, op, context, specifications));
         }
 
         public ICollection<TEntity> FindMany(IDbConnection connection, IDbTransaction transaction, ISpecification<TEntity, TId> specification = null)
         {
-            return FindMany(connection, transaction, GroupOperator.And, specification);
+            return FindMany(connection, transaction, GroupOperator.And, GetDefaultContext(), specification);
         }
 
-        public virtual ICollection<TEntity> FindMany(IDbConnection connection, IDbTransaction transaction, GroupOperator op,
+        public ICollection<TEntity> FindMany(IDbConnection connection, IDbTransaction transaction, GroupOperator op,
+            params ISpecification<TEntity, TId>[] specifications)
+        {
+            return FindMany(connection, transaction, op, GetDefaultContext(), specifications);
+        }
+
+        public virtual ICollection<TEntity> FindMany(IDbConnection connection, IDbTransaction transaction, GroupOperator op, TContext context,
             params ISpecification<TEntity, TId>[] specifications)
         {
             var predicate = MergeSpecifications(specifications, op);
@@ -167,6 +217,11 @@ namespace Simbad.Utils.Orm
                     return result;
                 }
             }
+        }
+
+        protected virtual TContext GetDefaultContext()
+        {
+            return default(TContext);
         }
     }
 }
