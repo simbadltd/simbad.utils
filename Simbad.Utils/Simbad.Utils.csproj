@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\StringValueAttribute.cs" />
+    <Compile Include="Collections\ListExtensions.cs" />
     <Compile Include="Collections\MaxHeap.cs" />
     <Compile Include="Collections\Heap.cs" />
     <Compile Include="Collections\MinHeap.cs" />

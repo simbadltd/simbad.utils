@@ -41,6 +41,7 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\ListExtensions.cs" />
     <Compile Include="Collections\StringDictionary.cs" />
     <Compile Include="Collections\StringList.cs" />
     <Compile Include="Collections\StringTripleTuple.cs" />
