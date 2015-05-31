@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Simbad.Utils.Utils
 {
-    public static class NameUtil
+    public static class NameUtils
     {
+        private static readonly bool IsNET45 = Type.GetType("System.Reflection.ReflectionContext", false) != null;
+
         /// <summary>
         /// Returns a string represantaion of a property name (or a method name), which is given using a lambda expression.
         /// </summary>
@@ -55,6 +59,24 @@ namespace Simbad.Utils.Utils
             }
 
             throw new ArgumentException("'expression' should be a member expression or a method call expression.", "expression");
+        }
+
+        public static string MethodName(LambdaExpression expression)
+        {
+            var unaryExpression = (UnaryExpression)expression.Body;
+            var methodCallExpression = (MethodCallExpression)unaryExpression.Operand;
+            if (IsNET45)
+            {
+                var methodCallObject = (ConstantExpression)methodCallExpression.Object;
+                var methodInfo = (MethodInfo)methodCallObject.Value;
+                return methodInfo.Name;
+            }
+            else
+            {
+                var methodInfoExpression = (ConstantExpression)methodCallExpression.Arguments.Last();
+                var methodInfo = (MemberInfo)methodInfoExpression.Value;
+                return methodInfo.Name;
+            }
         }
     }
 }

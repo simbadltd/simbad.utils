@@ -53,7 +53,7 @@
     <Compile Include="Extenders\LinqXmlExtender.cs" />
     <Compile Include="Extenders\StringExtender.cs" />
     <Compile Include="Helpers\CloneHelper.cs" />
-    <Compile Include="Helpers\NameUtil.cs" />
+    <Compile Include="Helpers\NameUtils.cs" />
     <Compile Include="MaybeMonad.cs" />
     <Compile Include="OperationResult.cs" />
     <Compile Include="Properties\Annotations.cs" />

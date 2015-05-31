@@ -91,7 +91,7 @@
     <Compile Include="PropertyCopier.cs" />
     <Compile Include="MaybeMonad.cs" />
     <Compile Include="PropertyCopy.cs" />
-    <Compile Include="Utils\NameUtil.cs" />
+    <Compile Include="Utils\NameUtils.cs" />
     <Compile Include="Utils\CloneUtils.cs" />
     <Compile Include="Utils\EnumUtils.cs" />
     <Compile Include="Utils\FileUtils.cs" />
@@ -124,7 +124,7 @@
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)\Collections\" "$(SolutionDir)Simbad.Utils.Silverlight\Collections\"
 copy "$(ProjectDir)\Extenders\" "$(SolutionDir)Simbad.Utils.Silverlight\Extenders\"
-copy "$(ProjectDir)\Utils\NameUtil.cs" "$(SolutionDir)Simbad.Utils.Silverlight\Helpers\NameUtil.cs"
+copy "$(ProjectDir)\Utils\NameUtils.cs" "$(SolutionDir)Simbad.Utils.Silverlight\Helpers\NameUtils.cs"
 copy "$(ProjectDir)\MaybeMonad.cs" "$(SolutionDir)Simbad.Utils.Silverlight\MaybeMonad.cs"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>

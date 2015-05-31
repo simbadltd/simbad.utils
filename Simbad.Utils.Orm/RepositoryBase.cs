@@ -163,8 +163,10 @@ namespace Simbad.Utils.Orm
             {
                 connection.Delete(entity: entity, transaction: transaction, commandTimeout: CommandTimeout);
             }
-
-            throw new InvalidOperationException(string.Format("Cannot delete entity with state:[{0}]", entity.State));
+            else
+            {
+                throw new InvalidOperationException(string.Format("Cannot delete entity with state:[{0}]", entity.State));
+            }
         }
 
         private static IPredicate MergeSpecifications(ICollection<ISpecification<TEntity, TId>> specifications, GroupOperator op)
