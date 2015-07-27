@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompareHelper.cs" />
+    <Compile Include="EntityExtensions.cs" />
     <Compile Include="EntityState.cs" />
     <Compile Include="IAggregationRoot.cs" />
     <Compile Include="IConnectionFactory.cs" />
