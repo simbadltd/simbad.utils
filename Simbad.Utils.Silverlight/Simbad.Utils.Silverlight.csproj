@@ -38,9 +38,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Collections\ListExtensions.cs" />
     <Compile Include="Collections\StringDictionary.cs" />
     <Compile Include="Collections\StringList.cs" />
@@ -65,6 +62,11 @@
     <Compile Include="ViewModels\StringTripleTupleViewModel.cs" />
     <Compile Include="ViewModels\TupleViewModel.cs" />
     <Compile Include="ViewModels\NotifyPropertyChangedBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="JetBrains.Annotations">
+      <HintPath>..\libs\JetBrains\sl50\JetBrains.Annotations.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
