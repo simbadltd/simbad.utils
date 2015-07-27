@@ -6,5 +6,10 @@
         {
             return entity != null;
         }
+
+        public static bool NotExists<T>(this IEntity<T> entity)
+        {
+            return entity == null;
+        }
     }
 }
