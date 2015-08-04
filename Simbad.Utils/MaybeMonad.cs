@@ -4,7 +4,7 @@ namespace Simbad.Utils
 {
     public static class MaybeMonad
     {
-        public static TOut IfNotNull<TIn, TOut>(this TIn obj, Func<TIn, TOut> selector)
+        public static TOut With<TIn, TOut>(this TIn obj, Func<TIn, TOut> selector)
             where TIn : class
             where TOut : class
         {
@@ -16,7 +16,7 @@ namespace Simbad.Utils
             return selector(obj);
         }
 
-        public static TOut IfNotNull<TIn, TOut>(this TIn obj, Func<TIn, TOut> selector, TOut? defaultValue)
+        public static TOut WithValue<TIn, TOut>(this TIn obj, Func<TIn, TOut> selector, TOut? defaultValue = null)
             where TIn : class
             where TOut : struct
         {

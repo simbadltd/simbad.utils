@@ -79,6 +79,7 @@
     <Compile Include="Encryption\ConfigProtection.cs" />
     <Compile Include="Encryption\Md5Encryption.cs" />
     <Compile Include="Extenders\DoubleExtensions.cs" />
+    <Compile Include="Extenders\EntityExtensions.cs" />
     <Compile Include="Extenders\EnumerableExtender.cs" />
     <Compile Include="Extenders\TimeZoneExtender.cs" />
     <Compile Include="Guard.cs" />
