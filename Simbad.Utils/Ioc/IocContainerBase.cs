@@ -22,14 +22,20 @@ namespace Simbad.Utils.Ioc
         }
 
         public IocContainerBase(string assembliesWildCard, INinjectSettings settings, params INinjectModule[] modules)
+            : this(PathUtils.GetApplicationRoot(), assembliesWildCard, settings, modules)
         {
-            var assemblies = GetAssemblies(assembliesWildCard).Select(Assembly.LoadFrom).ToList();
+        }
+
+        public IocContainerBase(string path, string assembliesWildCard, INinjectSettings settings, params INinjectModule[] modules)
+        {
+            var assemblies = GetAssemblies(path, assembliesWildCard).Select(Assembly.LoadFrom).ToList();
             Kernel = LoadNinjectKernel(assemblies, settings, modules);
         }
 
-        protected ICollection<string> GetAssemblies(string assembliesWildCard)
+        protected ICollection<string> GetAssemblies(string path, string assembliesWildCard)
         {
-            return Directory.GetFiles(PathUtils.GetApplicationRoot()).Where(f => StringUtils.MatchWildcard(assembliesWildCard, f)).ToList();
+            
+            return Directory.GetFiles(path).Where(f => StringUtils.MatchWildcard(assembliesWildCard, f)).ToList();
         }
 
         public T Get<T>(params IParameter[] parameters)
