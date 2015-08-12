@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="CompareHelper.cs" />
     <Compile Include="EntityState.cs" />
+    <Compile Include="Specifications\FilterByIdsSpecification.cs" />
     <Compile Include="IAggregationRoot.cs" />
     <Compile Include="IConnectionFactory.cs" />
     <Compile Include="IEntity.cs" />

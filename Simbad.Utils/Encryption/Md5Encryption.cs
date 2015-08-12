@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Simbad.Utils.Encryption
@@ -11,14 +12,8 @@ namespace Simbad.Utils.Encryption
             {
                 var inputBytes = Encoding.ASCII.GetBytes(input);
                 var hash = md5.ComputeHash(inputBytes);
-                var sb = new StringBuilder();
 
-                foreach (var b in hash)
-                {
-                    sb.Append(b.ToString("X2"));
-                }
-
-                return sb.ToString();
+                return BitConverter.ToString(hash).Replace("-", "");
             }
         }
     }

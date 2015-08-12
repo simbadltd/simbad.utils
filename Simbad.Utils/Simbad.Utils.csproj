@@ -79,7 +79,7 @@
     <Compile Include="Encryption\ConfigProtection.cs" />
     <Compile Include="Encryption\Md5Encryption.cs" />
     <Compile Include="Extenders\DoubleExtensions.cs" />
-    <Compile Include="Extenders\EntityExtensions.cs" />
+    <Compile Include="Extenders\NullExtender.cs" />
     <Compile Include="Extenders\EnumerableExtender.cs" />
     <Compile Include="Extenders\TimeZoneExtender.cs" />
     <Compile Include="Guard.cs" />
@@ -126,7 +126,8 @@
     <PostBuildEvent>copy "$(ProjectDir)\Collections\" "$(SolutionDir)Simbad.Utils.Silverlight\Collections\"
 copy "$(ProjectDir)\Extenders\" "$(SolutionDir)Simbad.Utils.Silverlight\Extenders\"
 copy "$(ProjectDir)\Utils\NameUtils.cs" "$(SolutionDir)Simbad.Utils.Silverlight\Helpers\NameUtils.cs"
-copy "$(ProjectDir)\MaybeMonad.cs" "$(SolutionDir)Simbad.Utils.Silverlight\MaybeMonad.cs"</PostBuildEvent>
+copy "$(ProjectDir)\MaybeMonad.cs" "$(SolutionDir)Simbad.Utils.Silverlight\MaybeMonad.cs"
+copy "$(ProjectDir)\Guard.cs" "$(SolutionDir)Simbad.Utils.Silverlight\Guard.cs"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

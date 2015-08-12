@@ -19,7 +19,7 @@ namespace Simbad.Utils.Orm
             Deleted = new ArrayList();
         }
 
-        public void RegisterNew<TEntity, TId>(TEntity entity) where TEntity : IEntity<TId>, IAggregationRoot
+        public void Create<TEntity, TId>(TEntity entity) where TEntity : IEntity<TId>, IAggregationRoot
         {
             lock (Sync)
             {
@@ -28,7 +28,7 @@ namespace Simbad.Utils.Orm
             }
         }
 
-        public void Save<TEntity, TId>(TEntity entity) where TEntity : IEntity<TId>, IAggregationRoot
+        public void Update<TEntity, TId>(TEntity entity) where TEntity : IEntity<TId>, IAggregationRoot
         {
             lock (Sync)
             {
